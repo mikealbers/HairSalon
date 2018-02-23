@@ -59,7 +59,7 @@ namespace HairSalon
         MySqlConnection conn = DB.Connection();
         conn.Open();
         MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
-        cmd.CommandText = @"SELECT * FROM stylist WHERE StylistID = '" + input + "';";
+        cmd.CommandText = @"SELECT * FROM stylists WHERE StylistID = '" + input + "';";
         MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
         while(rdr.Read())
         {
@@ -85,7 +85,7 @@ namespace HairSalon
         MySqlConnection conn = DB.Connection();
         conn.Open();
         MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
-        cmd.CommandText = @"SELECT * FROM stylist ORDER BY " + _sortCondition + ";";
+        cmd.CommandText = @"SELECT * FROM stylists ORDER BY " + _sortCondition + ";";
         MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
         while(rdr.Read())
         {
@@ -112,6 +112,50 @@ namespace HairSalon
       else if (condition == "4"){_sortCondition = "LastName DESC";}
       else if (condition == "5"){_sortCondition = "ClientID ASC";}
       else if (condition == "6"){_sortCondition = "ClientID DESC";}
+    }
+
+    public static void Clear()
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"DELETE FROM stylists; ALTER TABLE stylists AUTO_INCREMENT = 1;";
+      cmd.ExecuteNonQuery();
+      conn.Close();
+      if (conn != null){conn.Dispose();}
+    }
+
+    public void Save()
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"
+      INSERT INTO `stylists` (`firstName`) VALUES (@FirstName);
+      INSERT INTO `stylists` (`lastName`) VALUES (@LastName);
+      INSERT INTO `stylists` (`clientID`) VALUES (@Client);";
+
+      MySqlParameter stylistFirst = new MySqlParameter();
+      stylistFirst.ParameterName = "@FirstName";
+      stylistFirst.Value = this._stylistFirstName;
+      cmd.Parameters.Add(stylistFirst);
+
+      MySqlParameter stylistLast = new MySqlParameter();
+      stylistLast.ParameterName = "@LastName";
+      stylistLast.Value = this._stylistLastName;
+      cmd.Parameters.Add(stylistLast);
+
+      MySqlParameter stylistClient = new MySqlParameter();
+      stylistClient.ParameterName = "@Client";
+      stylistClient.Value = this._clientID;
+      cmd.Parameters.Add(stylistClient);
+
+      cmd.ExecuteNonQuery();
+      _stylistID = (int)cmd.LastInsertedId;
+
+      conn.Close();
+      if (conn != null){conn.Dispose();}
     }
 
   }
