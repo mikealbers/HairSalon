@@ -7,9 +7,8 @@
 
 * _Install .Net Framework and MAMP_
   _Instructions can be found at:_
-  ```
   https://www.learnhowtoprogram.com/c/getting-started-with-c/installing-c
-  ```
+
 
 * _Enter the following command into the command line to run mysql_
   ```
