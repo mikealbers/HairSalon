@@ -1,0 +1,43 @@
+@{
+    Layout = "_Layout";
+}
+
+<div class="jumbotron text-center">
+    <h1>Stylists</h1>
+</div>
+<div class="container text-center">
+    <h4><a href="/">Go Back</a></h4>
+    <div class="row">
+        <form action="/stylists" method="post">
+            <div class="col-md-4">
+            <h3>First Name</h3>
+            <button type="submit" name="button" value="1"><span class="glyphicon glyphicon-menu-down"></span></button>
+            <button type="submit" name="button" value="2"><span class="glyphicon glyphicon-menu-up"></span></button>
+            </div>
+            <div class="col-md-4">
+            <h3>Last Name</h3>
+            <button type="submit" name="button" value="1"><span class="glyphicon glyphicon-menu-down"></span></button>
+            <button type="submit" name="button" value="2"><span class="glyphicon glyphicon-menu-up"></span></button>
+            </div>
+            <div class="col-md-4">
+            <h3>Client List</h3>
+            </div>
+        </form>
+    </div>
+    <hr>
+    @foreach (var stylist in Model)
+    {
+        <div class="row list">
+            <div class="col-md-4">
+            <h4>@stylist.GetStylistFirstName()</h4>
+            </div>
+            <div class="col-md-4">
+            <h4>@stylist.GetStylistLastName()</h4>
+            </div>
+            <div class="col-md-4">
+            <h4><a href="/stylist/@stylist.GetClientID()">Clients</a></h4>
+            </div>
+        </div>
+    }
+</div>
+</div>

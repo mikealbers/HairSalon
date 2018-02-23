@@ -22,9 +22,10 @@ namespace HairSalon
       _clientID = clientID;
     }
 
+    public int GetStylistID(){return _stylistID;}
     public string GetStylistFirstName(){return _stylistFirstName;}
     public string GetStylistLastName(){return _stylistLastName;}
-    public int GetStylistID(){return _stylistID;}
+    public int GetClientID(){return _clientID;}
 
     public static List<Stylist> GetAll()
       {
@@ -32,7 +33,7 @@ namespace HairSalon
         MySqlConnection conn = DB.Connection();
         conn.Open();
         MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
-        cmd.CommandText = @"SELECT * FROM stylist;";
+        cmd.CommandText = @"SELECT * FROM stylists;";
         MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
         while(rdr.Read())
         {

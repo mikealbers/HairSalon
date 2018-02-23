@@ -1,3 +1,23 @@
+# Hair Salon  
+
+#### .NET MVC app that allows a user to make lists of Stylists and Clients.
+
+## Description
+_C# Week 3 project._
+
+### _Hair Salon_
+
+### Specifications
+
+* _User can add new stylists_
+  _input: firstname: Paul / lastname: Mitchell_  
+  _output: Paul Mitchell_  
+
+* _User can add new clients_
+  _input: firstname: Fabio / lastname: Lanzoni_  
+  _output: Fabio Lanzoni_  
+
+
 ## Setup / Install
 
 * _Clone this repository:_  
@@ -7,6 +27,7 @@
 
 * _Install .Net Framework and MAMP_
   _Instructions can be found at:_
+
   https://www.learnhowtoprogram.com/c/getting-started-with-c/installing-c
 
 
