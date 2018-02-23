@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using WorldData.Models;
+using HairSalon.Models;
 
 namespace HairSalon
 {
@@ -11,36 +11,36 @@ namespace HairSalon
           return View();
       }
 
-      [HttpGet("/cities")]
-        public ActionResult Cities()
-        {
-            return View("Cities", City.GetAll());
-        }
-
-        [HttpPost("/cities")]
-        public ActionResult SortCities()
-        {
-            City.SetSortCondition(Request.Form["button"]);
-            return View("Cities", City.Sort());
-        }
-
-        [HttpGet("/countries")]
-        public ActionResult Countries()
-        {
-            return View("Countries", Country.GetAll());
-        }
-
-        [HttpPost("/countries")]
-        public ActionResult SortCountries()
-        {
-            Country.SetSortCondition(Request.Form["button"]);
-            return View("Countries", Country.Sort());
-        }
-
-        [HttpGet("/countries/{id}")]
-        public ActionResult Detail(string id)
-        {
-            return View("Detail", City.Find(id));
-        }
+      // [HttpGet("/clients")]
+      //   public ActionResult Clients()
+      //   {
+      //       return View("Clients", City.GetAll());
+      //   }
+      //
+      //   [HttpPost("/clients")]
+      //   public ActionResult SortClients()
+      //   {
+      //       City.SetSortCondition(Request.Form["button"]);
+      //       return View("Clients", City.Sort());
+      //   }
+      //
+      //   [HttpGet("/stylists")]
+      //   public ActionResult Stylists()
+      //   {
+      //       return View("Stylists", Stylist.GetAll());
+      //   }
+      //
+      //   [HttpPost("/stylists")]
+      //   public ActionResult SortStylists()
+      //   {
+      //       Stylist.SetSortCondition(Request.Form["button"]);
+      //       return View("Stylists", Stylist.Sort());
+      //   }
+      //
+      //   [HttpGet("/stylists/{id}")]
+      //   public ActionResult Detail(string id)
+      //   {
+      //       return View("Detail", City.Find(id));
+      //   }
     }
 }

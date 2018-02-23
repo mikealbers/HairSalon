@@ -17,11 +17,11 @@
         </form>
     </div>
     <hr>
-    @foreach (var country in Model)
+    @foreach (var stylist in Model)
     {
         <div class="row list">
             <div class="col-md-3">
-            <h4><a href="/countries/@country.GetCountryCode()">@country.GetCountryName()</a></h4>
+            <h4><a href="/stylist/@stylist.GetCountryCode()">@country.GetCountryName()</a></h4>
             </div>
             <div class="col-md-1">
             <h4>@country.GetCountryCode()</h4>

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using MySql.Data.MySqlClient;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using WorldData.Models;
+using HairSalon.Models;
 
 namespace HairSalon
 {
@@ -14,12 +14,105 @@ namespace HairSalon
     private int _stylistID;
     private static string _sortCondition;
 
-    public Client (int id, string firstName, string lastName, int stylistID)
+    public Client (int ID, string firstName, string lastName, int stylistID)
     {
-      _clientID = id;
+      _clientID = ID;
       _clientFirstName = firstName;
       _clientLastName = lastName;
       _stylistID = stylistID;
     }
+
+    public string GetClientFirstName(){return _clientFirstName;}
+    public string GetClientLastName(){return _clientLastName;}
+    public int GetStylistID(){return _stylistID;}
+
+    public static List<Client> GetAll()
+      {
+        List<Client> allClients = new List<Client> {};
+        MySqlConnection conn = DB.Connection();
+        conn.Open();
+        MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+        cmd.CommandText = @"SELECT * FROM client;";
+        MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
+        while(rdr.Read())
+        {
+          int clientID = rdr.GetInt32(0);
+          string firstName = rdr.GetString(1);
+          string lastName = rdr.GetString(2);
+          int stylistID = rdr.GetInt32(3);
+
+          Client newClient = new Client(clientID, firstName, lastName, stylistID);
+          allClients.Add(newClient);
+        }
+        conn.Close();
+        if (conn != null)
+        {
+            conn.Dispose();
+        }
+        return allClients;
+      }
+
+
+    public static List<Client> Find(string input)
+    {
+      List<Client> findClients = new List<Client> {};
+        MySqlConnection conn = DB.Connection();
+        conn.Open();
+        MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+        cmd.CommandText = @"SELECT * FROM client WHERE StylistID = '" + input + "';";
+        MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
+        while(rdr.Read())
+        {
+          int clientID = rdr.GetInt32(0);
+          string firstName = rdr.GetString(1);
+          string lastName = rdr.GetString(2);
+          int stylistID = rdr.GetInt32(3);
+
+          Client newClient = new Client(clientID, firstName, lastName, stylistID);
+          findClients.Add(newClient);
+        }
+        conn.Close();
+        if (conn != null)
+        {
+            conn.Dispose();
+        }
+        return findClients;
+    }
+
+    public static List<Client> Sort()
+    {
+      List<Client> sortClients = new List<Client> {};
+        MySqlConnection conn = DB.Connection();
+        conn.Open();
+        MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+        cmd.CommandText = @"SELECT * FROM client ORDER BY " + _sortCondition + ";";
+        MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
+        while(rdr.Read())
+        {
+          int clientID = rdr.GetInt32(0);
+          string firstName = rdr.GetString(1);
+          string lastName = rdr.GetString(2);
+          int stylistID = rdr.GetInt32(3);
+
+          Client newClient = new Client(clientID, firstName, lastName, stylistID);
+          sortClients.Add(newClient);
+        }
+        conn.Close();
+        if (conn != null)
+        {
+            conn.Dispose();
+        }
+        return sortClients;
+    }
+    public static void SetSortCondition(string condition)
+    {
+      if (condition == "1"){_sortCondition = "FirstName ASC";}
+      else if (condition == "2"){_sortCondition = "FirstName DESC";}
+      else if (condition == "3"){_sortCondition = "LastName ASC";}
+      else if (condition == "4"){_sortCondition = "LastName DESC";}
+      else if (condition == "5"){_sortCondition = "StylistID ASC";}
+      else if (condition == "6"){_sortCondition = "stylistID DESC";}
+    }
+
   }
 }
