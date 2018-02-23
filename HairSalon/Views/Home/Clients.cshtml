@@ -14,14 +14,14 @@
         <h3>Stylist</h3>
         </div>
     </div>
-    @foreach (var city in Model)
+    @foreach (var client in Model)
     {
         <div class="row list">
             <div class="col-md-6">
-            <h4>@city.GetClientName()</h4>
+            <h4>@client.GetClientName()</h4>
             </div>
             <div class="col-md-6">
-            <h4>@city.GetStylistName()</h4>
+            <h4>@client.GetStylistName()</h4>
             </div>
         </div>
     }
