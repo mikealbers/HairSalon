@@ -1,0 +1,40 @@
+@{
+    Layout = "_Layout";
+}
+
+<div class="jumbotron text-center">
+    <h1>Stylists</h1>
+</div>
+<div class="container text-center">
+    <h4><a href="/">Go Back</a></h4>
+    <div class="row">
+        <form action="/countries" method="post">
+            <div class="col-md-3">
+            <h3>Name</h3>
+            <button type="submit" name="button" value="1"><span class="glyphicon glyphicon-menu-down"></span></button>
+            <button type="submit" name="button" value="2"><span class="glyphicon glyphicon-menu-up"></span></button>
+            </div>
+        </form>
+    </div>
+    <hr>
+    @foreach (var country in Model)
+    {
+        <div class="row list">
+            <div class="col-md-3">
+            <h4><a href="/countries/@country.GetCountryCode()">@country.GetCountryName()</a></h4>
+            </div>
+            <div class="col-md-1">
+            <h4>@country.GetCountryCode()</h4>
+            </div>
+            <div class="col-md-2">
+            <h4>@country.GetCountryContinent()</h4>
+            </div>
+            <div class="col-md-3">
+            <h4>@country.GetCountryRegion()</h4>
+            </div>
+            <div class="col-md-3">
+            <h4>@country.GetCountryPopulation()</h4>
+            </div>
+        </div>
+    }
+</div>
