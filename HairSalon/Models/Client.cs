@@ -145,9 +145,7 @@ namespace HairSalon
 
       var cmd = conn.CreateCommand() as MySqlCommand;
       cmd.CommandText = @"
-      INSERT INTO `clients` (`firstName`) VALUES (@FirstName);
-      INSERT INTO `clients` (`lastName`) VALUES (@LastName);
-      INSERT INTO `clients` (`clientID`) VALUES (@Client);";
+      INSERT INTO `clients` (`firstName`, `lastName`, `stylistID`) VALUES (@FirstName, @LastName, @Stylist);";
 
       MySqlParameter clientFirst = new MySqlParameter();
       clientFirst.ParameterName = "@FirstName";
@@ -160,7 +158,7 @@ namespace HairSalon
       cmd.Parameters.Add(clientLast);
 
       MySqlParameter clientStylist = new MySqlParameter();
-      clientStylist.ParameterName = "@Client";
+      clientStylist.ParameterName = "@Stylist";
       clientStylist.Value = this._stylistID;
       cmd.Parameters.Add(clientStylist);
 

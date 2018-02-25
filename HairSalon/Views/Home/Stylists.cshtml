@@ -13,29 +13,34 @@
         <form action="/stylists" method="post">
             <div class="col-md-4">
             <h3>First Name</h3>
-            <button type="submit" name="button" value="1"><span class="glyphicon glyphicon-menu-down"></span></button>
-            <button type="submit" name="button" value="2"><span class="glyphicon glyphicon-menu-up"></span></button>
+            @* <button type="submit" name="button" value="1"><span class="glyphicon glyphicon-menu-down"></span></button>
+            <button type="submit" name="button" value="2"><span class="glyphicon glyphicon-menu-up"></span></button> *@
             </div>
             <div class="col-md-4">
             <h3>Last Name</h3>
-            <button type="submit" name="button" value="1"><span class="glyphicon glyphicon-menu-down"></span></button>
-            <button type="submit" name="button" value="2"><span class="glyphicon glyphicon-menu-up"></span></button>
+            @* <button type="submit" name="button" value="3"><span class="glyphicon glyphicon-menu-down"></span></button>
+            <button type="submit" name="button" value="4"><span class="glyphicon glyphicon-menu-up"></span></button> *@
             </div>
             <div class="col-md-4">
-            <h3>Client List</h3>
+            <h3>Details</h3>
             </div>
         </form>
     </div>
     <hr>
     @foreach (var stylist in Model)
     {
-        <div class="row">
+        <div class="row lists">
+
             <div class="col-md-4">
             <h4>@stylist.GetStylistFirstName()</h4>
             </div>
             <div class="col-md-4">
             <h4>@stylist.GetStylistLastName()</h4>
             </div>
+            <div class="col-md-4">
+            <h4>More Info</h4>
+            </div>
+
         </div>
     }
 </div>

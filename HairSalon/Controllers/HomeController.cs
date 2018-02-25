@@ -24,9 +24,15 @@ namespace HairSalon.Controllers
         }
 
         [HttpGet("/stylists/new")]
-        public ActionResult CreateForm()
+        public ActionResult StylistsCreateForm()
         {
           return View();
+        }
+
+        [HttpGet("/clients/new")]
+        public ActionResult ClientsCreateForm()
+        {
+          return View(Stylist.GetAll());
         }
 
         [HttpPost("/stylists")]
@@ -41,7 +47,15 @@ namespace HairSalon.Controllers
         public ActionResult Clear()
         {
           Stylist.Clear();
-          return View("Stylists", Stylist.GetAll());
+          return View("Index", Stylist.GetAll());
+        }
+
+        [HttpPost("/stylists/sort")]
+        public ActionResult Sort()
+        {
+          Stylist.SetSortCondition(Request.Form["button"]);
+          Stylist.Sort();
+          return View("Stylists", Stylist.Sort());
         }
     }
 }

@@ -106,12 +106,12 @@ namespace HairSalon
     }
     public static void SetSortCondition(string condition)
     {
-      if (condition == "1"){_sortCondition = "FirstName ASC";}
-      else if (condition == "2"){_sortCondition = "FirstName DESC";}
-      else if (condition == "3"){_sortCondition = "LastName ASC";}
-      else if (condition == "4"){_sortCondition = "LastName DESC";}
-      else if (condition == "5"){_sortCondition = "ClientID ASC";}
-      else if (condition == "6"){_sortCondition = "ClientID DESC";}
+      if (condition == "1"){_sortCondition = "firstName ASC";}
+      else if (condition == "2"){_sortCondition = "firstName DESC";}
+      else if (condition == "3"){_sortCondition = "lastName ASC";}
+      else if (condition == "4"){_sortCondition = "lastName DESC";}
+      // else if (condition == "5"){_sortCondition = "ClientID ASC";}
+      // else if (condition == "6"){_sortCondition = "ClientID DESC";}
     }
 
     public static void Clear()
@@ -134,9 +134,7 @@ namespace HairSalon
       conn.Open();
 
       var cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = @"
-      INSERT INTO `stylists` (`firstName`) VALUES (@FirstName);
-      INSERT INTO `stylists` (`lastName`) VALUES (@LastName);";
+      cmd.CommandText = @"INSERT INTO `stylists` (`firstName`, `lastName`) VALUES (@FirstName, @LastName);";
 
       MySqlParameter stylistFirst = new MySqlParameter();
       stylistFirst.ParameterName = "@FirstName";
