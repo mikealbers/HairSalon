@@ -17,30 +17,31 @@ namespace HairSalon.Controllers
             return View("Clients", Client.GetAll());
         }
 
-        [HttpPost("/clients")]
-        public ActionResult SortClients()
-        {
-            Client.SetSortCondition(Request.Form["button"]);
-            return View("Clients", Client.Sort());
-        }
-
         [HttpGet("/stylists")]
         public ActionResult Stylists()
         {
             return View("Stylists", Stylist.GetAll());
         }
 
-        [HttpPost("/stylists")]
-        public ActionResult SortStylists()
+        [HttpGet("/stylists/new")]
+        public ActionResult CreateForm()
         {
-            Stylist.SetSortCondition(Request.Form["button"]);
-            return View("Stylists", Stylist.Sort());
+          return View();
         }
 
-        [HttpGet("/stylists/{id}")]
-        public ActionResult Detail(string id)
+        [HttpPost("/stylists")]
+        public ActionResult NewStylist()
         {
-            return View("Detail", Client.Find(id));
+            Stylist newStylist = new Stylist(Request.Form["firstName"], Request.Form["lastName"]);
+            newStylist.Save();
+            return View("Stylists", Stylist.GetAll());
+        }
+
+        [HttpGet("/stylists/clear")]
+        public ActionResult Clear()
+        {
+          Stylist.Clear();
+          return View("Stylists", Stylist.GetAll());
         }
     }
 }

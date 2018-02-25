@@ -14,12 +14,11 @@ namespace HairSalon
     private int _clientID;
     private static string _sortCondition;
 
-    public Stylist (int ID, string firstName, string lastName, int clientID)
+    public Stylist (string firstName, string lastName, int ID = 0)
     {
       _stylistID = ID;
       _stylistFirstName = firstName;
       _stylistLastName = lastName;
-      _clientID = clientID;
     }
 
     public int GetStylistID(){return _stylistID;}
@@ -42,7 +41,7 @@ namespace HairSalon
           string lastName = rdr.GetString(2);
           int clientID = rdr.GetInt32(3);
 
-          Stylist newStylist = new Stylist(stylistID, firstName, lastName, clientID);
+          Stylist newStylist = new Stylist(firstName, lastName, stylistID);
           allStylists.Add(newStylist);
         }
         conn.Close();
@@ -69,7 +68,7 @@ namespace HairSalon
           string lastName = rdr.GetString(2);
           int clientID = rdr.GetInt32(3);
 
-          Stylist newStylist = new Stylist(stylistID, firstName, lastName, clientID);
+          Stylist newStylist = new Stylist(firstName, lastName, stylistID);
           findStylists.Add(newStylist);
         }
         conn.Close();
@@ -95,7 +94,7 @@ namespace HairSalon
           string lastName = rdr.GetString(2);
           int clientID = rdr.GetInt32(3);
 
-          Stylist newStylist = new Stylist(stylistID, firstName, lastName, clientID);
+          Stylist newStylist = new Stylist(firstName, lastName, stylistID);
           sortStylists.Add(newStylist);
         }
         conn.Close();
@@ -123,7 +122,10 @@ namespace HairSalon
       cmd.CommandText = @"DELETE FROM stylists; ALTER TABLE stylists AUTO_INCREMENT = 1;";
       cmd.ExecuteNonQuery();
       conn.Close();
-      if (conn != null){conn.Dispose();}
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
     }
 
     public void Save()
@@ -134,8 +136,7 @@ namespace HairSalon
       var cmd = conn.CreateCommand() as MySqlCommand;
       cmd.CommandText = @"
       INSERT INTO `stylists` (`firstName`) VALUES (@FirstName);
-      INSERT INTO `stylists` (`lastName`) VALUES (@LastName);
-      INSERT INTO `stylists` (`clientID`) VALUES (@Client);";
+      INSERT INTO `stylists` (`lastName`) VALUES (@LastName);";
 
       MySqlParameter stylistFirst = new MySqlParameter();
       stylistFirst.ParameterName = "@FirstName";
