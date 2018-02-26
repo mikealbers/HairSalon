@@ -26,7 +26,7 @@ namespace HairSalon.Controllers
         [HttpGet("/stylists/new")]
         public ActionResult StylistsCreateForm()
         {
-          return View();
+          return View("StylistsCreateForm");
         }
 
         [HttpGet("/clients/new")]

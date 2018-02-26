@@ -26,6 +26,27 @@ namespace HairSalon
     public string GetStylistLastName(){return _stylistLastName;}
     public int GetClientID(){return _clientID;}
 
+    public override bool Equals(System.Object otherStylist)
+    {
+      if(!(otherStylist is Stylist))
+      {
+        return false;
+      }
+      else
+      {
+        Stylist newStylist = (Stylist) otherStylist;
+        bool idEquality = (this.GetStylistID() == newStylist.GetStylistID());
+        bool firstNameEquality = (this.GetStylistFirstName() == newStylist.GetStylistFirstName());
+        bool lastNameEquality = (this.GetStylistLastName() == newStylist.GetStylistLastName());
+        return (idEquality && firstNameEquality && lastNameEquality);
+      }
+    }
+
+    public override int GetHashCode()
+    {
+      return this.GetStylistFirstName().GetHashCode();
+    }
+
     public static List<Stylist> GetAll()
       {
         List<Stylist> allStylists = new List<Stylist> {};
