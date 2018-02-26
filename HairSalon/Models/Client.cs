@@ -11,33 +11,39 @@ namespace HairSalon
     private int _clientID;
     private string _clientFirstName;
     private string _clientLastName;
-    private int _stylistID;
+    private int _stylistID = 0;
     private static string _sortCondition;
 
-    public Client (int ID, string firstName, string lastName, int stylistID)
+    public Client (string firstName, string lastName, int ID = 0)
     {
       _clientID = ID;
       _clientFirstName = firstName;
       _clientLastName = lastName;
-      _stylistID = stylistID;
     }
 
     public string GetClientFirstName(){return _clientFirstName;}
     public string GetClientLastName(){return _clientLastName;}
-    public int GetStylistID(){return _stylistID;}
+    public int GetClientID(){return _clientID;}
 
     public override bool Equals(System.Object otherClient)
     {
-      if (!(otherClient is Client))
+      if(!(otherClient is Client))
       {
         return false;
       }
       else
       {
         Client newClient = (Client) otherClient;
+        bool idEquality = (this.GetClientID() == newClient.GetClientID());
         bool firstNameEquality = (this.GetClientFirstName() == newClient.GetClientFirstName());
-        return (firstNameEquality);
+        bool lastNameEquality = (this.GetClientLastName() == newClient.GetClientLastName());
+        return (idEquality && firstNameEquality && lastNameEquality);
       }
+    }
+
+    public override int GetHashCode()
+    {
+      return this.GetClientFirstName().GetHashCode();
     }
 
     public static List<Client> GetAll()
@@ -54,7 +60,7 @@ namespace HairSalon
           string firstName = rdr.GetString(1);
           string lastName = rdr.GetString(2);
           int stylistID = rdr.GetInt32(3);
-          Client newClient = new Client(clientID, firstName, lastName, stylistID);
+          Client newClient = new Client(firstName, lastName, clientID);
           allClients.Add(newClient);
         }
         conn.Close();
@@ -66,32 +72,37 @@ namespace HairSalon
       }
 
 
-    public static List<Client> Find(string input)
-    {
-      List<Client> findClients = new List<Client> {};
+      public static Client Find(int id)
+      {
         MySqlConnection conn = DB.Connection();
         conn.Open();
-        MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
-        cmd.CommandText = @"SELECT * FROM clients WHERE StylistID = '" + input + "';";
-        MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
+        var cmd = conn.CreateCommand() as MySqlCommand;
+        cmd.CommandText = @"SELECT * FROM stylists WHERE id = (@searchId);";
+
+        MySqlParameter searchId = new MySqlParameter();
+        searchId.ParameterName = "@searchId";
+        searchId.Value = id;
+        cmd.Parameters.Add(searchId);
+
+        var rdr = cmd.ExecuteReader() as MySqlDataReader;
+        int clientId = 0;
+        string firstName = "";
+        string lastName = "";
+
         while(rdr.Read())
         {
-          int clientID = rdr.GetInt32(0);
-          string firstName = rdr.GetString(1);
-          string lastName = rdr.GetString(2);
-          int stylistID = rdr.GetInt32(3);
-
-          Client newClient = new Client(clientID, firstName, lastName, stylistID);
-          findClients.Add(newClient);
+          clientId = rdr.GetInt32(0);
+          firstName = rdr.GetString(1);
+          lastName = rdr.GetString(2);
         }
+        Client newClient = new Client(firstName, lastName, clientId);
         conn.Close();
         if (conn != null)
         {
             conn.Dispose();
         }
-        return findClients;
-    }
-
+        return newClient;
+      }
     public static List<Client> Sort()
     {
       List<Client> sortClients = new List<Client> {};
@@ -107,7 +118,7 @@ namespace HairSalon
           string lastName = rdr.GetString(2);
           int stylistID = rdr.GetInt32(3);
 
-          Client newClient = new Client(clientID, firstName, lastName, stylistID);
+          Client newClient = new Client(firstName, lastName, clientID);
           sortClients.Add(newClient);
         }
         conn.Close();
