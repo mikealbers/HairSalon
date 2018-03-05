@@ -32,7 +32,7 @@ namespace HairSalon.Controllers
     public ActionResult ClearClients()
     {
       Client.Clear();
-      return View("Index", Client.GetAll());
+      return View("ClientsCleared", Client.GetAll());
     }
   }
 }

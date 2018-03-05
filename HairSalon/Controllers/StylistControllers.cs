@@ -33,7 +33,7 @@ namespace HairSalon.Controllers
     public ActionResult ClearStylists()
     {
       Stylist.Clear();
-      return View("Index", Stylist.GetAll());
+      return View("StylistsCleared", Stylist.GetAll());
     }
 
     [HttpPost("/stylists/sort")]
