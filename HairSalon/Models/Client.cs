@@ -8,22 +8,24 @@ namespace HairSalon
 {
   public class Client
   {
-    private int _clientID;
+    private int _clientId;
     private string _clientFirstName;
     private string _clientLastName;
-    private int _stylistID = 0;
+    private int _stylistId;
     private static string _sortCondition;
 
-    public Client (string firstName, string lastName, int ID = 0)
+    public Client (string firstName, string lastName, int stylistId, int Id = 0)
     {
-      _clientID = ID;
       _clientFirstName = firstName;
       _clientLastName = lastName;
+      _stylistId = stylistId;
+      _clientId = Id;
     }
 
     public string GetClientFirstName(){return _clientFirstName;}
     public string GetClientLastName(){return _clientLastName;}
-    public int GetClientID(){return _clientID;}
+    public int GetClientId(){return _clientId;}
+    public int GetClientStylistId(){return _stylistId;}
 
     public override bool Equals(System.Object otherClient)
     {
@@ -34,7 +36,7 @@ namespace HairSalon
       else
       {
         Client newClient = (Client) otherClient;
-        bool idEquality = (this.GetClientID() == newClient.GetClientID());
+        bool idEquality = (this.GetClientId() == newClient.GetClientId());
         bool firstNameEquality = (this.GetClientFirstName() == newClient.GetClientFirstName());
         bool lastNameEquality = (this.GetClientLastName() == newClient.GetClientLastName());
         return (idEquality && firstNameEquality && lastNameEquality);
@@ -56,11 +58,11 @@ namespace HairSalon
         MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
         while(rdr.Read())
         {
-          int clientID = rdr.GetInt32(0);
+          int clientId = rdr.GetInt32(0);
           string firstName = rdr.GetString(1);
           string lastName = rdr.GetString(2);
-          int stylistID = rdr.GetInt32(3);
-          Client newClient = new Client(firstName, lastName, clientID);
+          int stylistId = rdr.GetInt32(3);
+          Client newClient = new Client(firstName, lastName, stylistId, clientId);
           allClients.Add(newClient);
         }
         conn.Close();
@@ -113,12 +115,12 @@ namespace HairSalon
         MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
         while(rdr.Read())
         {
-          int clientID = rdr.GetInt32(0);
+          int clientId = rdr.GetInt32(0);
           string firstName = rdr.GetString(1);
           string lastName = rdr.GetString(2);
-          int stylistID = rdr.GetInt32(3);
+          int stylistId = rdr.GetInt32(3);
 
-          Client newClient = new Client(firstName, lastName, clientID);
+          Client newClient = new Client(firstName, lastName, clientId);
           sortClients.Add(newClient);
         }
         conn.Close();
@@ -134,8 +136,8 @@ namespace HairSalon
       else if (condition == "2"){_sortCondition = "FirstName DESC";}
       else if (condition == "3"){_sortCondition = "LastName ASC";}
       else if (condition == "4"){_sortCondition = "LastName DESC";}
-      else if (condition == "5"){_sortCondition = "StylistID ASC";}
-      else if (condition == "6"){_sortCondition = "stylistID DESC";}
+      else if (condition == "5"){_sortCondition = "StylistId ASC";}
+      else if (condition == "6"){_sortCondition = "stylistId DESC";}
     }
 
     public static void Clear()
@@ -156,7 +158,7 @@ namespace HairSalon
 
       var cmd = conn.CreateCommand() as MySqlCommand;
       cmd.CommandText = @"
-      INSERT INTO `clients` (`firstName`, `lastName`, `stylistID`) VALUES (@FirstName, @LastName, @Stylist);";
+      INSERT INTO `clients` (`firstName`, `lastName`, `stylistId`) VALUES (@FirstName, @LastName, @Stylist);";
 
       MySqlParameter clientFirst = new MySqlParameter();
       clientFirst.ParameterName = "@FirstName";
@@ -170,11 +172,11 @@ namespace HairSalon
 
       MySqlParameter clientStylist = new MySqlParameter();
       clientStylist.ParameterName = "@Stylist";
-      clientStylist.Value = this._stylistID;
+      clientStylist.Value = this._stylistId;
       cmd.Parameters.Add(clientStylist);
 
       cmd.ExecuteNonQuery();
-      _clientID = (int)cmd.LastInsertedId;
+      _clientId = (int)cmd.LastInsertedId;
 
       conn.Close();
       if (conn != null){conn.Dispose();}

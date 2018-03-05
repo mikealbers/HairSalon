@@ -3,12 +3,16 @@
 }
 
 <div class="jumbotron text-center">
-    <h1>Stylists</h1>
+    <h1>Clients</h1>
 </div>
 <div class="container text-center">
     <h4><a href="/">Go Back</a></h4>
     <h4><a href="stylists/new">Add a new STYLIST</a><h4>
-    <h4><a href="stylists/clear">Delete all STYLISTS</a><h4>
+    <h4><a href="/stylists">STYLIST list</a></h4>
+    <h4><a href="/clients">CLIENT list</a></h4>
+
+    <hr>
+    <h4><a href="clients/clear">Delete all CLIENTS</a><h4>
     <div class="row">
         <form action="/stylists" method="post">
             <div class="col-md-4">
@@ -34,7 +38,7 @@
             <h4>@client.GetClientLastName()</h4>
             </div>
             <div class="col-md-4">
-            <h4>@client.GetStylistID</h4>
+            <h4>@client.GetClientStylistId()</h4>
             </div>
 
         </div>

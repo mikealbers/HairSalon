@@ -8,23 +8,21 @@ namespace HairSalon
 {
   public class Stylist
   {
-    private int _stylistID;
+    private int _stylistId;
     private string _stylistFirstName;
     private string _stylistLastName;
-    private int _clientID;
     private static string _sortCondition;
 
-    public Stylist (string firstName, string lastName, int ID = 0)
+    public Stylist (string firstName, string lastName, int Id = 0)
     {
-      _stylistID = ID;
+      _stylistId = Id;
       _stylistFirstName = firstName;
       _stylistLastName = lastName;
     }
 
-    public int GetStylistID(){return _stylistID;}
+    public int GetStylistId(){return _stylistId;}
     public string GetStylistFirstName(){return _stylistFirstName;}
     public string GetStylistLastName(){return _stylistLastName;}
-    public int GetClientID(){return _clientID;}
 
     public override bool Equals(System.Object otherStylist)
     {
@@ -35,7 +33,7 @@ namespace HairSalon
       else
       {
         Stylist newStylist = (Stylist) otherStylist;
-        bool idEquality = (this.GetStylistID() == newStylist.GetStylistID());
+        bool idEquality = (this.GetStylistId() == newStylist.GetStylistId());
         bool firstNameEquality = (this.GetStylistFirstName() == newStylist.GetStylistFirstName());
         bool lastNameEquality = (this.GetStylistLastName() == newStylist.GetStylistLastName());
         return (idEquality && firstNameEquality && lastNameEquality);
@@ -57,12 +55,11 @@ namespace HairSalon
         MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
         while(rdr.Read())
         {
-          int stylistID = rdr.GetInt32(0);
+          int stylistId = rdr.GetInt32(0);
           string firstName = rdr.GetString(1);
           string lastName = rdr.GetString(2);
-          int clientID = rdr.GetInt32(3);
 
-          Stylist newStylist = new Stylist(firstName, lastName, stylistID);
+          Stylist newStylist = new Stylist(firstName, lastName, stylistId);
           allStylists.Add(newStylist);
         }
         conn.Close();
@@ -149,12 +146,11 @@ namespace HairSalon
         MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
         while(rdr.Read())
         {
-          int stylistID = rdr.GetInt32(0);
+          int stylistId = rdr.GetInt32(0);
           string firstName = rdr.GetString(1);
           string lastName = rdr.GetString(2);
-          int clientID = rdr.GetInt32(3);
 
-          Stylist newStylist = new Stylist(firstName, lastName, stylistID);
+          Stylist newStylist = new Stylist(firstName, lastName, stylistId);
           sortStylists.Add(newStylist);
         }
         conn.Close();
@@ -170,8 +166,6 @@ namespace HairSalon
       else if (condition == "2"){_sortCondition = "firstName DESC";}
       else if (condition == "3"){_sortCondition = "lastName ASC";}
       else if (condition == "4"){_sortCondition = "lastName DESC";}
-      // else if (condition == "5"){_sortCondition = "ClientID ASC";}
-      // else if (condition == "6"){_sortCondition = "ClientID DESC";}
     }
 
     public static void Clear()
@@ -206,13 +200,8 @@ namespace HairSalon
       stylistLast.Value = this._stylistLastName;
       cmd.Parameters.Add(stylistLast);
 
-      MySqlParameter stylistClient = new MySqlParameter();
-      stylistClient.ParameterName = "@Client";
-      stylistClient.Value = this._clientID;
-      cmd.Parameters.Add(stylistClient);
-
       cmd.ExecuteNonQuery();
-      _stylistID = (int)cmd.LastInsertedId;
+      _stylistId = (int)cmd.LastInsertedId;
 
       conn.Close();
       if (conn != null){conn.Dispose();}

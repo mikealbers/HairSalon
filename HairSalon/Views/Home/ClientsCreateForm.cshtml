@@ -10,10 +10,10 @@
   <form action="/clients" method="post">
     <input type="text" name="firstName"></input>
     <input type="text" name="lastName"></input>
-    <select class="form-dropdown" name="stylistID" required>
+    <select class="form-dropdown" name="stylistId" required>
       @foreach (var stylist in Model)
       {
-        <option value="@stylist.GetStylistID()">@stylist.GetStylistFirstName() @stylist.GetStylistLastName()</option>
+        <option name="@stylist.GetStylistId()" value="@stylist.GetStylistId()">@stylist.GetStylistFirstName() @stylist.GetStylistLastName()</option>
       }
     </select>
 
