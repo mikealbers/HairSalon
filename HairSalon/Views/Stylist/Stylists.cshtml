@@ -6,10 +6,7 @@
     <h1>Stylists</h1>
 </div>
 <div class="container text-center">
-    <h4><a href="/">Go Back</a></h4>
-    <h4><a href="stylists/new">Add a new STYLIST</a><h4>
-      <hr>
-    <h4><a href="stylists/clear">Delete all STYLISTS</a><h4>
+
     <div class="row">
         <form action="/stylists/sort" method="post">
             <div class="col-md-4">
@@ -28,6 +25,7 @@
         </form>
     </div>
     <hr>
+
     @foreach (var stylist in Model)
     {
         <div class="row lists">
@@ -39,8 +37,9 @@
             <h4>@stylist.GetStylistLastName()</h4>
             </div>
             <div class="col-md-4">
-            <h4>More Info</h4>
+            <h4><a href="stylists/details/@stylist.GetStylistId()">More Info</a></h4>
             </div>
+
 
         </div>
     }

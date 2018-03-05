@@ -2,11 +2,14 @@
 <html>
   <head>
     <meta charset='utf-8'>
-    <title>STYLE</title>
+    <title>STYLEZONE</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel='stylesheet' href='~/css/styles.css'>
+    <link rel="stylesheet" type="text/css" href="~/css/styles.css">
   </head>
   <body>
     @RenderBody()
+    @{
+    Html.RenderPartial("_Navigation");
+    }
   </body>
 </html>

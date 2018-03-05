@@ -7,21 +7,26 @@
 </div>
 <div class="container text-center">
   <h1>New Client</h1>
-  <form action="/clients" method="post">
-    <input type="text" name="firstName"></input>
-    <input type="text" name="lastName"></input>
-    <select class="form-dropdown" name="stylistId" required>
-      @foreach (var stylist in Model)
-      {
-        <option name="@stylist.GetStylistId()" value="@stylist.GetStylistId()">@stylist.GetStylistFirstName() @stylist.GetStylistLastName()</option>
+      @{
+        if (@Model.Count > 0)
+        {
+          <form action="/clients" method="post">
+            <input type="text" name="firstName" placeholder="First name"></input>
+            <input type="text" name="lastName" placeholder="Last name"></input>
+            <select class="form-dropdown" name="stylistId" required>
+            @foreach (var stylist in Model)
+            {
+              <option name="@stylist.GetStylistId()" value="@stylist.GetStylistId()">@stylist.GetStylistFirstName() @stylist.GetStylistLastName()</option>
+            }
+            </select>
+            <button type="submit">Add a new CLIENT</button>
+          </form>
+        }
+        else
+        {
+          <h3>Please add a Stylist first</h3>
+        }
       }
-    </select>
-
-    </select>
-    <button type="submit">Add a new CLIENT</button>
-  </form>
-
-  <p><a href="/">Go Back</a></p>
-  <p><a href="/stylists">STYLIST List</a></p>
+  <bR><br>
 
 </div>

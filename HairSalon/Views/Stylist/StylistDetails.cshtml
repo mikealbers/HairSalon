@@ -1,0 +1,38 @@
+@{
+  Layout = "_Layout";
+}
+<div class="jumbotron text-center">
+  <h1>@Model["stylist"].GetStylistFirstName() @Model["stylist"].GetStylistLastName()</h1>
+</div>
+<center>
+  <h3>Clients</h3>
+  <br><br>
+  <ol>
+    @{
+      if (@Model["clients"].Count > 0)
+      {
+        @foreach (var client in @Model["clients"])
+        {
+            <div class="row lists">
+
+                <div class="col-md-4">
+
+                </div>
+                <div class="col-md-4">
+                <h4>@client.GetClientFirstName() @client.GetClientLastName()</h4>
+                </div>
+                <div class="col-md-4">
+
+                </div>
+
+            </div>
+            <hr>
+        }
+      }
+      else
+      {
+        <h3>No current clients</h3>
+      }
+    }
+
+  </center>
