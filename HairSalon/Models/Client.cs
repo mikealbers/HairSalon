@@ -79,7 +79,7 @@ namespace HairSalon
         MySqlConnection conn = DB.Connection();
         conn.Open();
         var cmd = conn.CreateCommand() as MySqlCommand;
-        cmd.CommandText = @"SELECT * FROM stylists WHERE id = (@searchId);";
+        cmd.CommandText = @"SELECT * FROM clients WHERE id = (@searchId);";
 
         MySqlParameter searchId = new MySqlParameter();
         searchId.ParameterName = "@searchId";
@@ -90,14 +90,16 @@ namespace HairSalon
         int clientId = 0;
         string firstName = "";
         string lastName = "";
+        int stylistId = 0;
 
         while(rdr.Read())
         {
           clientId = rdr.GetInt32(0);
           firstName = rdr.GetString(1);
           lastName = rdr.GetString(2);
+          stylistId = rdr.GetInt32(3);
         }
-        Client newClient = new Client(firstName, lastName, clientId);
+        Client newClient = new Client(firstName, lastName, stylistId, clientId);
         conn.Close();
         if (conn != null)
         {

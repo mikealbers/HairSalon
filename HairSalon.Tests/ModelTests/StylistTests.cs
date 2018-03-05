@@ -48,11 +48,11 @@ namespace HairSalon.Tests
 
       //Act
       Stylist savedStylist = Stylist.GetAll()[0];
-      int result = savedStylist.GetStylistID();
-      int testID = newStylist.GetStylistID();
+      int result = savedStylist.GetStylistId();
+      int testId = newStylist.GetStylistId();
 
       //Assert
-      Assert.AreEqual(result, testID);
+      Assert.AreEqual(result, testId);
     }
 
     [TestMethod]
@@ -63,7 +63,7 @@ namespace HairSalon.Tests
       newStylist.Save();
 
       //Act
-      Stylist foundStylist = Stylist.Find(newStylist.GetStylistID());
+      Stylist foundStylist = Stylist.Find(newStylist.GetStylistId());
 
       //Assert
       Assert.AreEqual(newStylist, foundStylist);
